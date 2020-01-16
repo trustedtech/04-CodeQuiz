@@ -1,7 +1,47 @@
-#topRow {
+body {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 1em;
+    line-height: 1em;
+}
+
+.quiznav {
     display: flex;
-    margin-left: 20px;
-    font-family: "Arial Narrow";
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 25px;
     font-size: 1.2em;
     font-weight: bolder;
+}
+
+section {
+    margin-top: 20%;
+}
+
+h1 {
+    margin-bottom:20px;
+    font-size: 1.5em;
+    font-weight: bold;
+
+}
+
+.button {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: cornflowerblue;
+    color: white;
+}
+
+#startQuiz {
+    display: block;
+    padding: 10px 20px;
+    margin: 30px auto;
+    font-size: 1.1em;
+}
+
+#response {
+    font-style: italic;
+    font-weight: bolder;
+    margin-left: 20px;
 }
