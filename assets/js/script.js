@@ -14,6 +14,7 @@ var question10 = {words: "Which of these keywords is not used to invoke an inter
 var questionCollection = [question01, question02, question03, question04, question05, question06, question07, question08, question09, question10];
 
 var score = 0;
+var hiScores = {};
 var challengeIndex = 0;
 var timeRemaining = 91;
 var question = questionCollection[0];
@@ -46,7 +47,6 @@ $("button[id*='spot']").click(function(){
         $('#response').text(replyCorrect);
     }
     else {
-        var response = $("<p></p>").text("Wrong Answer!");
         $('#response').css('color', 'orangered');
         $("#response").text(replyWrong);
     }
@@ -97,6 +97,8 @@ function quizEnd() {
         $("#timeNumber").css('color', 'yellowgreen');
     }
     
+    score = score * 10;
+
     $('#challengeDiv').empty();
     $('#challengeDiv').append('<h1>All done!</h1>');
     $('#challengeDiv').append('<p>Your score is <strong>' + score + '</strong>.</p>');
@@ -105,10 +107,22 @@ function quizEnd() {
 
 //Processes and stores user initials and score
 function registerScore() {
-    var inits = $('#input').val();
-    localStorage.setItem(inits, score);
-    console.log("Initials: " + inits);
-    console.log("Score: " + score);
-
+    if ( score >= 70) {
+        var inits = $('#input').val();
+        var localScores = JSON.parse(localStorage.getItem("localScores"));
+        if ( localScores !== null ) {
+            localScores[inits] = score;
+        }
+        else {
+            localScores = {};
+            localScores[inits] = score;
+        }
+        localStorage.setItem("localScores", JSON.stringify(localScores));
+        console.log("Initials: " + inits);
+        console.log("Score: " + score);
+    }
+    else {
+        return;
+    }
 }
 
