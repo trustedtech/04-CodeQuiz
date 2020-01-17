@@ -15,7 +15,7 @@ var questionCollection = [question01, question02, question03, question04, questi
 
 var score = 0;
 var challengeIndex = 0;
-var timeRemaining = 90;
+var timeRemaining = 91;
 var question = questionCollection[0];
 var replyCorrect = "Correct Answer!";
 var replyWrong = "Wrong Answer!";
@@ -103,6 +103,7 @@ function quizEnd() {
     $('#registerForm').css('display', 'block');
 }
 
+//Processes and stores user initials and score
 function registerScore() {
     var inits = $('#input').val();
     localStorage.setItem(inits, score);
