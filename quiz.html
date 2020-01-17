@@ -19,7 +19,8 @@
         <span>Time: <span id="timeNumber">90</span></span>
     </nav>
 
-    <section class="container">
+    <section class="container flex">
+
         <div class="row justify-content-center">
             <div id="challengeDiv" class="col-sm-6">
                 <h1 id="questionArea">In Javascript, which character is used to terminate each statement?</h1>
@@ -31,9 +32,18 @@
                 <p id="response"></p>    
             </div>
         </div>
+
+        <div class="row justify-content-center">
+            <form id="registerForm" action="./highscores.html">
+                Enter your initials here: 
+                <input id="input" class="inline-block" name="initials" type="text" min=2 maxlength=3 size=3>
+                <button id="submitInits" class="button">Submit</button>
+            </form>
+        </div>
+
     </section>
 
-    <script src="assets/js/script.js"></script>
+ <script src="assets/js/script.js"></script>
     
 </body>
 </html>

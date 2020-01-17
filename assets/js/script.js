@@ -1,7 +1,7 @@
 //Creates all the quiz questions as objects
 var question01 = {words: "In Javascript, which character is used to terminate each statement?", choice1: "a period", choice2: "an ampersand", choice3: "a tilde", choice4: "a semicolon", correctAns: "a semicolon"};
 var question02 = {words: "Which of the following keywords does not initiate a loop?", choice1: "goto", choice2: "if", choice3: "while", choice4: "switch", correctAns: "goto"};
-var question03 = {words: "An array is type of what?", choice1: "keyword", choice2: "loop", choice3: "object", choice4: "function", correctAns: "object"};
+var question03 = {words: "An array is a type of what?", choice1: "keyword", choice2: "loop", choice3: "object", choice4: "function", correctAns: "object"};
 var question04 = {words: "When defining a function, you must enclose its content with what characters?", choice1: "greater than / less than", choice2: "curly brackets", choice3: "quotation marks", choice4: "pipe symbols", correctAns: "curly brackets"};
 var question05 = {words: "Which of these is not an example of a primitive value type?", choice1: "number", choice2: "string", choice3: "object", choice4: "undefined", correctAns: "object"};
 var question06 = {words: "A variable that has not been assigned a value has which of the following as its value?", choice1: "empty", choice2: "0", choice3: "false", choice4: "undefined", correctAns: "undefined"};
@@ -20,27 +20,20 @@ var question = questionCollection[0];
 var replyCorrect = "Correct Answer!";
 var replyWrong = "Wrong Answer!";
 
-//Runs the quiz timer
-function quizTimer() {
-  var interval = setInterval(function() {
-    timeRemaining--;
-    $("#timeNumber").text(timeRemaining);
-
-        if(timeRemaining === 0) {
-            clearInterval(interval);
-            confirm("Time's Up!");
-            quizEnd();
-        }
-
-    }, 1000);
-}
+//Initiates and starts the quiz timer
+var clock = setInterval(quizTimer, 1000);
 quizTimer();
 
+//Listening for player to submit initials
+$("button[id*='submitInits']").click(function(){
+    registerScore();
+    return;
+})
 
 //Listening for player to click on an answer
-$('.button').click(function(){
+$("button[id*='spot']").click(function(){
     event.preventDefault();
-
+ 
     //Grab the text corresponding to their choice
     var choice = $(this).text();
         console.log(choice);
@@ -58,7 +51,7 @@ $('.button').click(function(){
         $("#response").text(replyWrong);
     }
 
-    //Move onto the next question and update the screen
+    //Advance to the next question and update the screen
     if ( challengeIndex < 9 ) {
         challengeIndex++;
         question = questionCollection[challengeIndex]
@@ -70,7 +63,21 @@ $('.button').click(function(){
 
 })
 
-//Changes the questions and choices displayed on the screen
+
+//Operates the quiz timer
+function quizTimer() {
+    timeRemaining--;
+    $("#timeNumber").text(timeRemaining);
+
+    if(timeRemaining === 0) {
+        clearInterval(clock);
+        confirm("Time's Up!");
+        quizEnd();
+    }
+
+}
+
+//Alters the words displayed on the screen for any given challenge question
 function poseChallenge() {
     $('#response').text('');
     $('#questionArea').text(question["words"]);
@@ -80,11 +87,27 @@ function poseChallenge() {
     $('#spot4').text(question["choice4"]);
 }
 
-//Records score and ends the quiz cycle
+//Records score and ends the quiz program
 function quizEnd() {
+    clearInterval(clock);
+    if ( $("#timeNumber").text() == 0) { 
+        $("#timeNumber").css('color', 'orangered'); 
+    }
+    else { 
+        $("#timeNumber").css('color', 'yellowgreen');
+    }
+    
     $('#challengeDiv').empty();
     $('#challengeDiv').append('<h1>All done!</h1>');
     $('#challengeDiv').append('<p>Your score is <strong>' + score + '</strong>.</p>');
-    //alert("This quiz is over.");
+    $('#registerForm').css('display', 'block');
+}
+
+function registerScore() {
+    var inits = $('#input').val();
+    localStorage.setItem(inits, score);
+    console.log("Initials: " + inits);
+    console.log("Score: " + score);
+
 }
 
